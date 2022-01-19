@@ -16,23 +16,18 @@ class MySingleton(object):
     def __init__(self):
         raise RuntimeError('Call instance() instead')
 
+    @classmethod
+    def __new__(cls, name):
+        result = object.__new__(cls)
+        return result
+
     # 3
     @classmethod
     def get_instance(cls):
         if cls._instance is None:
-            cls._instance = cls.__new__(cls)
-            cls._instance.name = 'itay' # maybe from config
-        return cls._instance
+            cls._instance = cls.__new__('itay')
 
-    # @staticmethod
-    # def get_instance_static():
-    #     if MySingleton._instance is None:
-    #         MySingleton._instance = MySingleton.__new__(MySingleton)
-    #         MySingleton._instance.name = 'itay'
-    #     # check if instance exists
-    #     #  ... if not create
-    #     # return the instance
-    #     return MySingleton._instance
+        return cls._instance
 
     def print_hello(self):
         print('hello')
@@ -45,4 +40,16 @@ print(sing2)
 print(sing1.name)
 sing1.print_hello()
 #print(MySingleton._instance)
+
+class A():
+    @staticmethod
+    def foo():
+        pass
+
+class B(A):
+    pass
+
+b = B()
+B.foo()
+
 
