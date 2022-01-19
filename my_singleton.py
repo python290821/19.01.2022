@@ -19,6 +19,7 @@ class MySingleton(object):
     @classmethod
     def __new__(cls, name):
         result = object.__new__(cls)
+        result.name = name
         return result
 
     # 3
@@ -26,7 +27,7 @@ class MySingleton(object):
     def get_instance(cls):
         if cls._instance is None:
             cls._instance = cls.__new__('itay')
-
+            # cls._instance.name = 'itay'
         return cls._instance
 
     def print_hello(self):
